@@ -1,6 +1,7 @@
 # analyzes the mounted recruitment drive and creates a CSV / table representation of all self-assessment forms.
 from pathlib import Path
 from Participant import Participant
+import numpy as np
 
 
 # Searches recursively for all self assessment submissions.
@@ -83,17 +84,45 @@ def extract_participants():
     return participants
 
 
-def build_markdown_grid():
-    markdown = "# Recruitment\nBelow scores are auto extraced from the self-assessment forms. Recruitment answers range from 1-5 where 5 indicates the highest experience.\n\n| **Name** | Java | Spring | MVN | T-CORE | UNIX | REST | Singl. | Refl. | *Total* |\n|---|---|---|---|---|---|---|---|---|---|\n"
-    text_file = open("/tmp/recruitment.md", 'w')
-    text_file.write(markdown)
+## compute the actual average of participant skills
+def build_average_skills(participants):
+    return [number / len(participants) for number in build_summed_skills(participants)]
 
-    ## Add an entry for every recruitment form detected
+
+## computes a summed vector of all participant skills
+def build_summed_skills(participants):
+    # sum of all participant skills
+    summed_skills = [0,0,0,0,0,0,0,0]
+    for participant in participants:
+        summed_skills = np.add(summed_skills, participant.skills)
+    return summed_skills
+
+
+def build_markdown_grid():
     participants = extract_participants()
+
+    text_file = open("/tmp/recruitment.md", 'w')
+
+    markdown_title = "# Recruitment\n"
+    text_file.write(markdown_title)
+
+    ## Build stat recruitment grid
+    markdown_stats_preamble = '## Stats\n\nBelow grid shows statistical information about participant skills.  \nRecruitment answers range from 1-5 where 5 indicates the highest experience.\n\n| \ | Java | Spring | MVN | T-CORE | UNIX | REST | Singl. | Refl. |\n|---|---|---|---|---|---|---|---|---|\n'
+    text_file.write(markdown_stats_preamble)
+    # Average
+    text_file.write("| **Average** |")
+    for average_score in build_average_skills(participants):
+        text_file.write(str(round(average_score,1)) + " |")
+    text_file.write("\n")
+    # Normalized Vector
+
+
+    ## Build participant recruitment scores
+    markdown_participant_preamble = "## Participants\n\nBelow scores are auto extraced from the self-assessment forms.  \nRecruitment answers range from 1-5 where 5 indicates the highest experience.\n\n| **Name** | Java | Spring | MVN | T-CORE | UNIX | REST | Singl. | Refl. | *Total* |\n|---|---|---|---|---|---|---|---|---|---|\n"
+    text_file.write(markdown_participant_preamble)
     for participant in participants:
         text_file.write(build_participant_line(participant))
 
     text_file.close()
-
 
 build_markdown_grid()
