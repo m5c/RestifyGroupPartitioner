@@ -1,5 +1,6 @@
 # analyzes the mounted recruitment drive and creates a CSV / table representation of all self-assessment forms.
 from pathlib import Path
+from Participant import Participant
 
 
 # Searches recursively for all self assessment submissions.
@@ -16,6 +17,7 @@ def get_all_forms():
 
 ## Helper function to determine the human readable skill scores for a participant.
 ## Argument is string pointing to the the form as absolute path
+## Returns an integer array
 def extract_scores(form):
     with open(form) as f:
         lines = f.readlines()
@@ -44,22 +46,41 @@ def extract_scores(form):
 
 
 ## argument is the form location, not the form content
-def build_participant_line(form):
-
-    line = "|"
-
+def extract_participant_line(form):
     ## extract participant name from form file location
-    participant_name = str(form).split("/")[4]
-    line = line + "*"+participant_name + "* |"
+    name = str(form).split("/")[4]
 
     ## extract participant skills from form file
-    participant_skills = extract_scores(form)
-    for skill in participant_skills:
-        line = line + str(skill) + "|"
+    skills = extract_scores(form)
 
     ## add total score
-    line = line + str(sum(participant_skills))+"|\n"
+    return Participant(name, skills)
+
+
+## builds a markdon table line for a given participant
+def build_participant_line(participant):
+    line = "|"
+    # name
+    line = line + "*" + participant.name + "* |"
+
+    # all scores
+    for skill in participant.skills:
+        line = line + str(skill) + "|"
+
+    # total score
+    line = line + str(participant.compute_total_score()) + "|\n"
     return line
+
+
+## Build participant objects from parsed forms
+def extract_participants():
+    participants = []
+
+    ## Add an entry for every recruitment form detected
+    for form in get_all_forms():
+        participants.append(extract_participant_line(form))
+
+    return participants
 
 
 def build_markdown_grid():
@@ -68,9 +89,11 @@ def build_markdown_grid():
     text_file.write(markdown)
 
     ## Add an entry for every recruitment form detected
-    for form in get_all_forms():
-        text_file.write(build_participant_line(form))
+    participants = extract_participants()
+    for participant in participants:
+        text_file.write(build_participant_line(participant))
 
     text_file.close()
+
 
 build_markdown_grid()
