@@ -1,5 +1,8 @@
 # analyzes the mounted recruitment drive and creates a CSV / table representation of all self-assessment forms.
 from pathlib import Path
+
+import numpy.linalg
+
 from Participant import Participant
 import numpy as np
 
@@ -89,6 +92,12 @@ def build_average_skills(participants):
     return [number / len(participants) for number in build_summed_skills(participants)]
 
 
+## compute the noramlized vector of participant skills
+def build_normalized_skills(participants):
+    summed_skills = build_summed_skills(participants)
+    return summed_skills / numpy.sqrt(np.sum(summed_skills**2))
+
+
 ## computes a summed vector of all participant skills
 def build_summed_skills(participants):
     # sum of all participant skills
@@ -112,10 +121,13 @@ def build_markdown_grid():
     # Average
     text_file.write("| **Average** |")
     for average_score in build_average_skills(participants):
-        text_file.write(str(round(average_score,1)) + " |")
+        text_file.write(str(round(average_score,2)) + " |")
     text_file.write("\n")
     # Normalized Vector
-
+    text_file.write("| **Normalized** |")
+    for normalized_score in build_normalized_skills(participants):
+        text_file.write(str(round(normalized_score,2)) + " |")
+    text_file.write("\n")
 
     ## Build participant recruitment scores
     markdown_participant_preamble = "## Participants\n\nBelow scores are auto extraced from the self-assessment forms.  \nRecruitment answers range from 1-5 where 5 indicates the highest experience.\n\n| **Name** | Java | Spring | MVN | T-CORE | UNIX | REST | Singl. | Refl. | *Total* |\n|---|---|---|---|---|---|---|---|---|---|\n"
