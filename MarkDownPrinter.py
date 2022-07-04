@@ -76,7 +76,7 @@ def print_participant_details(text_file, participants):
 
 # Build distribution
 def print_distribution(text_file, participants):
-    markdown_distribution_preamble = "## Distribution\n\nSuggested distribution into four control groups with maximized skill similarity per group:\n"
+    markdown_distribution_preamble = "## Distribution\n\nSuggested distribution into four control groups with maximized skill similarity per group.  \nSimiliarity is defined as *close **mean** and **standard deviation** values between groups, for all skills*, where lower distance for more skills is preferred over higher distance for few skills."
     text_file.write(markdown_distribution_preamble)
 
 
