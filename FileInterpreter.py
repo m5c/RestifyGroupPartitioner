@@ -58,6 +58,9 @@ def extract_participant_line(form):
     return Participant(name, skills)
 
 
+def participant_total_score(participant):
+    return(participant.compute_total_score())
+
 ## Build participant objects from parsed forms
 def extract_participants():
     participants = []
@@ -65,6 +68,9 @@ def extract_participants():
     ## Add an entry for every recruitment form detected
     for form in get_all_forms():
         participants.append(extract_participant_line(form))
+
+    # Before return, order the participants by their individual score sum
+    participants.sort(reverse=True, key=participant_total_score)
 
     return participants
 

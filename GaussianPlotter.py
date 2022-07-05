@@ -32,7 +32,7 @@ def plot_box(values, palette):
 
     # plot the boxes
     for index in range(len(values)):
-        plt.boxplot(values[index], positions=[index + 1], notch=False, patch_artist=True, showfliers=False,
+        plt.boxplot(values[index], positions=[index + 1], notch=False, patch_artist=True, showfliers=True,
                     boxprops=dict(facecolor=palette[index], color="#FFFFFF"),
                     capprops=dict(color=palette[index]),
                     whiskerprops=dict(color=palette[index]),
