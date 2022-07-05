@@ -28,10 +28,15 @@ Filled input forms are reduced to lines containing any variant of ```[x]``` (var
 
 The subsequent comparison / building of fair groups requires groups that are as similar as possible. Similarity is measured by comparison of the groups' overall normalized skill vectors. For skill vector comparison we use a the [cosine distance metric](https://en.wikipedia.org/wiki/Cosine_similarity), to sidestep the [curse of dimensionality of a standard euclidian metric](https://bib.dbvis.de/uploadedFiles/155.pdf).
 
-### Timos Heuristic
+### Bettina's Heuristic
+
+Only distribute based in *Total* skill points. Start on one side of ordered list and distribute into groups until end reached. Total skills per group should be roughly the same.  
+Slight ide for improvement: Go back and forth. Lake four lowest, place into groups ABCD. On next iteration place into groups DCBA and so on.
+
+### Timo's Heuristic
 
 A brute force testing of all possible group partitions is not technically feasible (```1.1E10``` combinations).  
-Timo's algorithm attempts to search for the fairest possible partition where the first group created is as close as possible to the normalized average skill vector. This reduces the combinatoric charge for brute force testing of the remaining groups to ```757E3``` possible partitions, which can be checked manually for the best solution.
+Timo's algorithm attempts to search for the fairest possible partition where the first group created is as close as possible to the normalized average skill vector. This reduces the combinatoric charge for brute force testing of the remaining groups to ```7.6E5``` possible partitions, which can be checked manually for the best solution.
 
 ## Usage
 
