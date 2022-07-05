@@ -1,5 +1,7 @@
-from ParticipantStatTools import build_mean_skills, build_normalized_skills, build_standard_deviation_skills
-from GaussianPlotter import plot_gaussian
+import numpy
+
+from ParticipantStatTools import build_mean_skills, build_normalized_skills, build_standard_deviation_skills, extract_skill_values_by_index
+from GaussianPlotter import plot_gaussian, plot_box
 
 # https://colorspectrum.design/generator.html
 palette = ["#8d8d8d", "#5ce7cb", "#5ca6e7", "#7a5ce7", "#d75ce7", "#e75c90", "#e7865c", "#747474"]
@@ -37,6 +39,25 @@ def build_participant_scores_line(participant):
 def print_global_stats(text_file, participants):
     markdown_stats_preamble = '## Statistics\n\nBelow grid shows statistical information about participants and their skills.  \nRecruitment answers range from 1-5 where 5 indicates the highest experience.\n\n| \ | ' + coloured_skill_cells + '\n|---|---|---|---|---|---|---|---|---|\n'
     text_file.write(markdown_stats_preamble)
+
+    # Min
+    text_file.write("| **Min.** |")
+    for index in range(len(participants[0].skills)):
+        text_file.write(str(int(numpy.min(extract_skill_values_by_index(index, participants)))) + " |")
+    text_file.write("\n")
+
+    # Max
+    text_file.write("| **Max.** |")
+    for index in range(len(participants[0].skills)):
+        text_file.write(str(int(numpy.max(extract_skill_values_by_index(index, participants)))) + " |")
+    text_file.write("\n")
+
+    # Median
+    text_file.write("| **Median** |")
+    for index in range(len(participants[0].skills)):
+        text_file.write(str(int(numpy.median(extract_skill_values_by_index(index, participants)))) + " |")
+    text_file.write("\n")
+
     # Average
     text_file.write("| **Average** |")
     mean_scores = build_mean_skills(participants)
@@ -56,10 +77,17 @@ def print_global_stats(text_file, participants):
     for normalized_score in build_normalized_skills(participants):
         text_file.write(str(round(normalized_score, 2)) + " |")
 
-    # Generate Plot to file
+    # Generate Gaussian Plot to file
     for index in range(len(participants[0].skills)):
         plot_gaussian(mean_scores[index], stddev_scores[index], palette[index])
     text_file.write("\n\n![gaussians](/tmp/gaussians.png)")
+
+    # Generate Box Plot to file
+    skills = []
+    for index in range(len(participants[0].skills)):
+        skills.append(extract_skill_values_by_index(index, participants))
+    plot_box(skills, palette)
+    text_file.write("\n\n![box](/tmp/box.png)")
 
     # Total participant count:
     text_file.write("\n\n")
