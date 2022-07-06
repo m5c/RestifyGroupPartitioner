@@ -23,3 +23,4 @@ class ScoreBasedDistributor(DistributorInterface):
             for i in range(overfilled):
                 self.participants.pop()
         print("Looks good, I will now distirbute " + str(len(self.participants)) + " participants on " + str(len(self.groups)) + " groups...")
+        #TODO: actually partition things here and return result list.
