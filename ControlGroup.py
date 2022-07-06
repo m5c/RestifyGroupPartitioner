@@ -10,6 +10,9 @@ class ControlGroup:
     def add_participant(self, participant):
         self.participants.append(participant)
 
+    def get_participants(self):
+        return self.participants
+
     def get_group_name(self):
         return self.name
 
@@ -17,7 +20,7 @@ class ControlGroup:
         return sum(ParticipantStatTools.build_summed_skills(self.participants))
 
     def __str__(self):
-        group_str = self.get_group_name() + ": " + str(self.get_group_score())+"\n"
+        group_str = "Total score: " + str(self.get_group_score())+"\n"
         for participant in self.participants:
             group_str += " * "+str(participant)+"\n"
         return group_str

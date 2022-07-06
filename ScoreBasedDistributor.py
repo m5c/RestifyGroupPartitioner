@@ -18,7 +18,7 @@ def distibute_batch(participants, groups):
 # * Only the total score of a participant / group is taken into consideration
 # * Participants are ordered by their total score
 # * If the amount of participants is not a multiple of the amount of target groups, the weakest participants are removed until this holds
-# * Participants are distirbuted batch wise: each batch has as many participants as their are groups
+# * Participants are distributed batch wise: each batch has as many participants as their are groups
 # * The target groups are sorted based on their current total skill
 # Reason: The later participants per batch are always stronger than the earlier ones. By arangeing the target groups inversely, the strong participants always end up where they are needed the most.
 class ScoreBasedDistributor(DistributorInterface):
