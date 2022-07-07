@@ -6,6 +6,9 @@ from DistributorInterface import DistributorInterface
 # Removes them from the received list.
 # Since participants are sorted, the function first orders the target groups by their current total score, to give the
 # most powerful user to the currenlty weakest target group and so on.
+from Partition import Partition
+
+
 def distibute_batch(participants, groups):
     groups = sorted(groups, key=lambda g: g.get_group_score(), reverse=True)
     groups[0].add_participant(participants.pop())
@@ -49,4 +52,4 @@ class ScoreBasedDistributor(DistributorInterface):
         for i in range(4):
             print(self.groups[i])
 
-        return self.groups
+        return Partition(self.groups)

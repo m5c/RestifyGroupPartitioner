@@ -9,6 +9,9 @@ class Participant:
     def compute_total_score(self):
         return sum(self.skills)
 
+    def get_skill_amount(self):
+        return len(self.skills)
+
     def __str__(self):
         participant_str = self.name + ": ["
         for skill in self.skills:

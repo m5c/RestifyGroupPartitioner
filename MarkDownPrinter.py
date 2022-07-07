@@ -1,7 +1,9 @@
 import numpy
 
-from ParticipantStatTools import build_mean_skills, build_normalized_skills, build_standard_deviation_skills, extract_skill_values_by_index
+from ParticipantStatTools import build_mean_skills, build_normalized_skills, build_standard_deviation_skills, \
+    extract_skill_values_by_index
 from Plotter import plot_gaussian, plot_box
+from Partition import Partition
 
 # https://colorspectrum.design/generator.html
 palette = ["#8d8d8d", "#5ce7cb", "#5ca6e7", "#7a5ce7", "#d75ce7", "#e75c90", "#e7865c", "#747474"]
@@ -106,35 +108,40 @@ def print_participant_details(preamble, text_file, participants):
 
 
 # Similar to call to box plotter in print_global_stats, but creates 4 boxplots next to another, representing the individual groups.
-def build_fused_stats(control_groups):
-
-    amount_skills = len(control_groups[0].get_participants()[0].skills)
-
+def build_fused_stats(partition):
     # lists all invidual skills, but with interleaving groups
     interleaved_skills = []
-    for skill_index in range(amount_skills):
-        for group_index in range(len(control_groups)):
-            interleaved_skills.append(extract_skill_values_by_index(skill_index, control_groups[group_index].get_participants()))
-    plot_box(interleaved_skills, palette, len(control_groups), "/tmp/fused-stats.png")
+    for skill_index in range(partition.get_skill_amount()):
+        groups = partition.groups
+        for group_index in range(len(groups)):
+            interleaved_skills.append(
+                extract_skill_values_by_index(skill_index, groups[group_index].get_participants()))
+    plot_box(interleaved_skills, palette, len(groups), "/tmp/fused-stats.png")
 
 
-def print_distribution(text_file, control_groups):
-    build_fused_stats(control_groups)
+def print_distribution(text_file, partition):
+    build_fused_stats(partition)
 
+    # build and print fused plot
     markdown_distribution_preamble = "## Distribution\n\nFused Stats:\n\n![fusedstats](fused-stats.png)\n\n"
     text_file.write(markdown_distribution_preamble)
-    for control_group in control_groups:
-        text_file.write("### "+control_group.get_group_name()+"\n\nTotal Score: "+str(control_group.get_group_score())+"\n\n#### Participants\n\n")
+
+    # print minimax and average delta grid
+
+
+    for control_group in partition.groups:
+        text_file.write("### " + control_group.get_group_name() + "\n\nTotal Score: " + str(
+            control_group.get_group_score()) + "\n\n#### Participants\n\n")
         print_participant_details(False, text_file, control_group.get_participants())
         # text_file.write("\n\n#### Stats\n\n")
 
 
-def build_markdown(participants: [], control_groups: []):
+def build_markdown(participants: [], partition: Partition):
     text_file = open("/tmp/recruitment.md", 'w')
 
     print_preamble(text_file)
     print_participant_details(True, text_file, participants)
     print_global_stats(text_file, participants)
-    print_distribution(text_file, control_groups)
+    print_distribution(text_file, partition)
 
     text_file.close()
