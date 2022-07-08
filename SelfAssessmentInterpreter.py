@@ -1,7 +1,7 @@
 import FileInterpreter
 import MarkDownPrinter
 from distributor.ScoreBasedDistributor import ScoreBasedDistributor
-from distributor.MinniMaxOptimizer import optimize
+from distributor.MinniMaxOptimizer import optimize_once, optimize
 
 # Main script logic
 FileInterpreter.verify_input_files()

@@ -3,9 +3,9 @@ import ParticipantStatTools
 
 class ControlGroup:
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, participants: []):
         self.name = name
-        self.participants = []
+        self.participants = participants
 
     def add_participant(self, participant):
         self.participants.append(participant)

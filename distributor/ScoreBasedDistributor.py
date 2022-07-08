@@ -28,8 +28,8 @@ class ScoreBasedDistributor(DistributorInterface):
 
     # Create the distributor and provide it with preliminary data. We separate initialization from the actual algorithm because other implementations may contain random elements and require multiple runs of the distribution algorithm.
     def __init__(self, p: [], group_names: str):
-        self.groups = [ControlGroup(group_names[0]), ControlGroup(group_names[1]), ControlGroup(group_names[2]),
-                       ControlGroup(group_names[3])]
+        self.groups = [ControlGroup(group_names[0], []), ControlGroup(group_names[1], []), ControlGroup(group_names[2], []),
+                       ControlGroup(group_names[3], [])]
         self.participants = p.copy()
 
     # Actually distribute the initialized participants into the control groups.

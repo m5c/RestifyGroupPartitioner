@@ -108,7 +108,7 @@ def print_participant_details(preamble, text_file, participants):
 
 
 # Similar to call to box plotter in print_global_stats, but creates 4 boxplots next to another, representing the individual groups.
-def build_fused_stats(partition):
+def build_fused_stats(partition: Partition):
     # lists all individual skills, but with interleaving groups
     interleaved_skills = []
     for skill_index in range(partition.get_skill_amount()):
@@ -148,8 +148,6 @@ def print_distribution(text_file, partition):
         else:
             text_file.write(str(round(partition.get_average_diffs()[skill_index].get_diff(), 1)) + "|")
     text_file.write("\n")
-
-
 
     # TODO: highlight greatest diff.
     # print max diff, textually.
