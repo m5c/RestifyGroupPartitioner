@@ -119,14 +119,40 @@ def build_fused_stats(partition):
     plot_box(interleaved_skills, palette, len(groups), "/tmp/fused-stats.png")
 
 
+# Helper function to print information about a given partition and the individual control groups.
 def print_distribution(text_file, partition):
     build_fused_stats(partition)
 
     # build and print fused plot
-    markdown_distribution_preamble = "## Distribution\n\nFused Stats:\n\n![fusedstats](fused-stats.png)\n\n"
+    markdown_distribution_preamble = "## Distribution\n\nFused Stats: (skill stats for all groups and all skills)\n\n![fusedstats](fused-stats.png)\n\n"
     text_file.write(markdown_distribution_preamble)
 
-    # print minimax and average delta grid
+    # print meta information about partition (grid with all skills on x axis, min group average, max group average, diff. Mark column with greates diff (Max) in bold.
+    markdown_distribution_meta_preamble = "\n\nSkill inter-group variability: (represented as squares in above chart)\n\n| \ | " + coloured_skill_cells + "\n|---|---|---|---|---|---|---|---|---|\n"
+    text_file.write(markdown_distribution_meta_preamble)
+    # print AVG max
+    text_file.write("| AVG max |")
+    for skill_index in range(partition.get_skill_amount()):
+        text_file.write(str(round(partition.get_average_diffs()[skill_index].get_max(), 1)) + "|")
+    text_file.write("\n")
+    # print AVG min
+    text_file.write("| AVG min |")
+    for skill_index in range(partition.get_skill_amount()):
+        text_file.write(str(round(partition.get_average_diffs()[skill_index].get_min(), 1)) + "|")
+    text_file.write("\n")
+    # print AVG  diff
+    text_file.write("| AVG diff |")
+    for skill_index in range(partition.get_skill_amount()):
+        if skill_index == partition.get_max_diff().get_skill_index():
+            text_file.write("**" + str(round(partition.get_average_diffs()[skill_index].get_diff(), 1)) + "** |")
+        else:
+            text_file.write(str(round(partition.get_average_diffs()[skill_index].get_diff(), 1)) + "|")
+    text_file.write("\n")
+
+
+
+    # TODO: highlight greatest diff.
+    # print max diff, textually.
 
     for control_group in partition.groups:
         text_file.write("### " + control_group.get_group_name() + "\n\nTotal Score: " + str(

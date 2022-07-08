@@ -20,7 +20,7 @@ class Partition:
 
         # iterate over above skill vectors and determine min and max per group. Save the greatest differences observed
         # per skill
-        max_average_diffs = []
+        all_average_diffs = []
         for skill_index in range(self.get_skill_amount()):
 
             # build averages for ONE skill, for all groups
@@ -28,18 +28,22 @@ class Partition:
             for group_index in range(len(self.groups)):
                 skill_group_averages.append(group_skill_averages[group_index][skill_index])
 
-            max_average_diffs.append(MaxAverageDiff(skill_group_averages))
+            all_average_diffs.append(MaxAverageDiff(skill_group_averages, skill_index))
 
         # Return the actual "Max", defined as the greatest difference in skill competences, for the same skill within
         # a partition.
-        return max(max_average_diffs, key=lambda m: m.diff)
+        return all_average_diffs
 
     def __init__(self, groups: []):
         self.groups = groups
-        self.max_offset = self.compute_max_offset()
+        self.average_diffs = self.compute_max_offset()
+        self.max_average_diff = max(self.average_diffs, key=lambda m: m.diff)
 
     def get_groups(self):
         return self.groups
 
-    def get_max_offset(self):
-        return self.max_offset
+    def get_average_diffs(self):
+        return self.average_diffs
+
+    def get_max_diff(self):
+        return self.max_average_diff

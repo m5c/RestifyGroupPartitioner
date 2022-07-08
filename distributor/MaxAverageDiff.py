@@ -3,7 +3,8 @@
 # skills).
 class MaxAverageDiff:
 
-    def __init__(self, averages):
+    def __init__(self, averages, skill_index):
+        self.skill_index = skill_index
         self.min = min(averages)
         self.max = max(averages)
         self.diff = self.max - self.min
@@ -16,3 +17,6 @@ class MaxAverageDiff:
 
     def get_diff(self):
         return self.diff
+
+    def get_skill_index(self):
+        return self.skill_index
