@@ -1,12 +1,12 @@
-from ControlGroup import ControlGroup
-from DistributorInterface import DistributorInterface
+from distributor.ControlGroup import ControlGroup
+from distributor.DistributorInterface import DistributorInterface
 
 
 # Adds one batch of participants to the target groups
 # Removes them from the received list.
 # Since participants are sorted, the function first orders the target groups by their current total score, to give the
 # most powerful user to the currenlty weakest target group and so on.
-from Partition import Partition
+from distributor.Partition import Partition
 
 
 def distibute_batch(participants, groups):

@@ -1,3 +1,6 @@
+# Helper class to define the Max distance observed between all groups, for one skill-specific array off average
+# competence values. Each value represents one group. This is not the "Max" (defined as greatest MaxAverageDiff of ALL
+# skills).
 class MaxAverageDiff:
 
     def __init__(self, averages):

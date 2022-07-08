@@ -3,7 +3,7 @@ import numpy
 from ParticipantStatTools import build_mean_skills, build_normalized_skills, build_standard_deviation_skills, \
     extract_skill_values_by_index
 from Plotter import plot_gaussian, plot_box
-from Partition import Partition
+from distributor.Partition import Partition
 
 # https://colorspectrum.design/generator.html
 palette = ["#8d8d8d", "#5ce7cb", "#5ca6e7", "#7a5ce7", "#d75ce7", "#e75c90", "#e7865c", "#747474"]
@@ -109,7 +109,7 @@ def print_participant_details(preamble, text_file, participants):
 
 # Similar to call to box plotter in print_global_stats, but creates 4 boxplots next to another, representing the individual groups.
 def build_fused_stats(partition):
-    # lists all invidual skills, but with interleaving groups
+    # lists all individual skills, but with interleaving groups
     interleaved_skills = []
     for skill_index in range(partition.get_skill_amount()):
         groups = partition.groups
@@ -128,7 +128,6 @@ def print_distribution(text_file, partition):
 
     # print minimax and average delta grid
 
-
     for control_group in partition.groups:
         text_file.write("### " + control_group.get_group_name() + "\n\nTotal Score: " + str(
             control_group.get_group_score()) + "\n\n#### Participants\n\n")
@@ -136,12 +135,19 @@ def print_distribution(text_file, partition):
         # text_file.write("\n\n#### Stats\n\n")
 
 
-def build_markdown(participants: [], partition: Partition):
+def build_markdown(participants: []):
+    build_markdown_with_partition(participants, [])
+
+
+def build_markdown_with_partition(participants: [], partition: Partition):
     text_file = open("/tmp/recruitment.md", 'w')
 
     print_preamble(text_file)
     print_participant_details(True, text_file, participants)
     print_global_stats(text_file, participants)
-    print_distribution(text_file, partition)
+
+    # Only append partition stats if there is somethign to print (not empty)
+    if partition:
+        print_distribution(text_file, partition)
 
     text_file.close()
