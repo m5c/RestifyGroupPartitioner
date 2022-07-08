@@ -22,6 +22,9 @@ class ControlGroup:
     def get_skill_amount(self):
         return self.participants[0].get_skill_amount()
 
+    def get_group_size(self):
+        return len(self.participants)
+
     def __str__(self):
         group_str = "Total score: " + str(self.get_group_score()) + "\n"
         for participant in self.participants:

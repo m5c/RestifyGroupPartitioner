@@ -47,3 +47,6 @@ class Partition:
 
     def get_max_diff(self):
         return self.max_average_diff
+
+    def get_group_size(self):
+        return self.groups[0].get_group_size()
