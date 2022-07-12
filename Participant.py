@@ -12,6 +12,9 @@ class Participant:
     def get_skill_amount(self):
         return len(self.skills)
 
+    def get_name(self):
+        return self.name
+
     def __str__(self):
         participant_str = self.name + ": ["
         for skill in self.skills:
