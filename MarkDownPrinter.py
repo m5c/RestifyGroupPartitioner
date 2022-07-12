@@ -91,7 +91,7 @@ def print_global_stats(text_file, participants):
     # Generate Gaussian Plot to file
     for index in range(len(participants[0].skills)):
         plot_gaussian(mean_scores[index], stddev_scores[index], palette[index])
-    text_file.write("\n\n![gaussians](/tmp/gaussians.png)")
+    text_file.write("\n\n![gaussians](gaussians.png)")
 
     # Generate Box Plot to file
     skills = []
