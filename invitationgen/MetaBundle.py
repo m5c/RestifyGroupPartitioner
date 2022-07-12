@@ -22,13 +22,13 @@ class MetaBundle:
         return self.email
 
     def get_pseudonym(self):
-        return self.get_pseudonym
+        return self.pseudonym
 
     def get_upload_location(self):
         return self.upload_location
 
-    def get_group(self):
-        return self.group
+    def get_group_name(self):
+        return self.group_name
 
     def set_pseudonym(self, pseudonym: string):
         self.pseudonym = pseudonym
