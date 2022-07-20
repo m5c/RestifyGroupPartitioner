@@ -26,15 +26,18 @@ def print_preamble(text_file):
 
 
 # builds a markdown table line for a given participant
-def build_participant_scores_line(participant: Participant, meta_bundle: []):
+def build_participant_scores_line(participant: Participant, meta_bundles: []):
     line = "|"
     # name
     line = line + "*" + participant.name + "* "
 
+
     # if meta bundle info is provided, also print the email symbol
-    if meta_bundle:
-        line = line + " I:"+generate_email_content(meta_bundle[participant.get_name()])
-        line = line + "   R:"+generate_reminder_content(meta_bundle[participant.get_name()])
+    if meta_bundles:
+        meta_bundle = meta_bundles[participant.get_name()]
+        line = line + "<br />["+meta_bundle.get_pseudonym()+"]"
+        line = line + " I:"+generate_email_content(meta_bundle)
+        line = line + "   R:"+generate_reminder_content(meta_bundle)
 
     line = line + " |"
 
@@ -115,7 +118,6 @@ def print_participant_details(preamble, text_file, participants, meta_bundles: [
         markdown_participant_preamble = "## Skill Matrix\n\nBelow scores are auto extracted from the self-assessment forms.  \nRecruitment answers range from 1-5 where 5 indicates the highest experience.\n\n"
         text_file.write(markdown_participant_preamble)
 
-    # TODO: figure out how to make this work for both, total overview and control group overview.
     text_file.write("| **Name** | " + coloured_skill_cells + " *Total* |\n|---|---|---|---|---|---|---|---|---|---|\n")
     for participant in participants:
         text_file.write(build_participant_scores_line(participant, meta_bundles))
