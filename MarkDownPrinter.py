@@ -35,7 +35,7 @@ def build_participant_scores_line(participant: Participant, meta_bundles: []):
     # if meta bundle info is provided, also print the email symbol
     if meta_bundles:
         meta_bundle = meta_bundles[participant.get_name()]
-        line = line + "<br />["+meta_bundle.get_pseudonym()+"]"
+        line = line + "<br />[["+meta_bundle.get_pseudonym()+"](" + meta_bundle.get_upload_location()+ ")]"
         line = line + " I:"+generate_email_content(meta_bundle)
         line = line + "   R:"+generate_reminder_content(meta_bundle)
 
@@ -190,7 +190,7 @@ def build_markdown_with_partition(participants: [], partition: Partition, meta_b
     print_participant_details(True, text_file, participants, [])
     print_global_stats(text_file, participants)
 
-    # Second (optional) part of the generated file: The partition groups and peratition specific stats and actions
+    # Second (optional) part of the generated file: The partition groups and partition specific stats and actions
     # (generated email). Hence, here the meta_bundle must not be empty.
     if partition:
         print_distribution(text_file, partition, meta_bundles)
