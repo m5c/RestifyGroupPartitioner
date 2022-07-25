@@ -7,7 +7,7 @@ from Plotter import plot_gaussian, plot_box
 from distributor.Partition import Partition
 
 # https://colorspectrum.design/generator.html
-from invitationgen.EmailGen import generate_email_content, generate_reminder_content
+from invitationgen.EmailGen import generate_email_content, generate_reminder_content, generate_extension_content
 
 palette = ["#8d8d8d", "#5ce7cb", "#5ca6e7", "#7a5ce7", "#d75ce7", "#e75c90", "#e7865c", "#747474"]
 coloured_skill_cells = "<span style=\"color:" + palette[0] + "\">Java</span> | <span style=\"color:" + palette[
@@ -38,6 +38,7 @@ def build_participant_scores_line(participant: Participant, meta_bundles: []):
         line = line + "<br />[["+meta_bundle.get_pseudonym()+"](" + meta_bundle.get_upload_location()+ ")]"
         line = line + " I:"+generate_email_content(meta_bundle)
         line = line + "   R:"+generate_reminder_content(meta_bundle)
+        line = line + "   Extension:"+generate_extension_content(meta_bundle)
 
     line = line + " |"
 

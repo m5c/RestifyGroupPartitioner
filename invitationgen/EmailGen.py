@@ -26,9 +26,11 @@ def generate_reminder_content(meta: MetaBundle):
     generic_email_html_button = '<a href="mailto:PARTICIPANT_EMAIL?bcc=maximilian.schiedermeier@mcgill.ca&subject=RESTify Experiment DEADLINE Approaching&amp;body=Hello FIRST_NAME,%0D%0A%0D%0AThis is a reminder that you are enroled in the RESTify study and have not yet uploaded the requested files.%0D%0ADeadline for all file uploads is: Sunday, July 24th 2022%0D%0A%0D%0AIt is highly recommended to commence the study as early as possible, since you may encounter technical diffculties that need our assistance.%0D%0A(In case you already uploaded, yet still received this email, please let me know. I will verify you submission as soon as I can!)%0D%0A%0D%0A%0D%0ABest,%0D%0AMaximilian Schiedermeier" style="text-decoration: none">📧</a>'
     generic_email_html_button = generic_email_html_button.replace("PARTICIPANT_EMAIL", meta.get_email())
     generic_email_html_button = generic_email_html_button.replace("FIRST_NAME", meta.get_first_name())
-    # generic_email_html_button = generic_email_html_button.replace("MAIN_COLOUR_SERVER_LOCATION", build_main_instruction_location(meta.get_group_name()))
-    # generic_email_html_button = generic_email_html_button.replace("MIRROR_COLOUR_SERVER_LOCATION",
-    #                                   build_mirror_instruction_location(meta.get_group_name()))
-    # generic_email_html_button = generic_email_html_button.replace("PSEUDONYM", meta.get_pseudonym())
-    # generic_email_html_button = generic_email_html_button.replace("ONEDRIVE_UPLOAD_LOCATION", meta.get_upload_location())
+    return generic_email_html_button
+
+
+def generate_extension_content(meta: MetaBundle):
+    generic_email_html_button = '<a href="mailto:PARTICIPANT_EMAIL?bcc=maximilian.schiedermeier@mcgill.ca&subject=RESTify Experiment Confirmation Needed&amp;body=Hello FIRST_NAME,%0D%0A%0D%0AYou are receiving this email because you registered for the RESTify study, but did not provide the requested study data until the provided deadline, which was Sunday evening.%0D%0A%0D%0AYour participation in the study is valuable to us, therefore we offer you an extended deadline: Sunday, July 31st 2022 23PM59.%0D%0A%0D%0AIf you still intend to participate, please let us know: Either by submitting before Wednesday noon or by sending us an email before Wednesday noon where you confirm your active commitment to the study.%0D%0A%0D%0AIf we have not heard back until Wednesday noon we unfortunately have to pass your spot to a participant on the waiting list and you will no longer be able to participate.%0D%0A%0D%0ABest, and hoping to hear from you soon,%0D%0AMaximilian Schiedermeier" style="text-decoration: none">📧</a>'
+    generic_email_html_button = generic_email_html_button.replace("PARTICIPANT_EMAIL", meta.get_email())
+    generic_email_html_button = generic_email_html_button.replace("FIRST_NAME", meta.get_first_name())
     return generic_email_html_button
