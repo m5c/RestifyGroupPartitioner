@@ -34,3 +34,9 @@ def generate_extension_content(meta: MetaBundle):
     generic_email_html_button = generic_email_html_button.replace("PARTICIPANT_EMAIL", meta.get_email())
     generic_email_html_button = generic_email_html_button.replace("FIRST_NAME", meta.get_first_name())
     return generic_email_html_button
+
+def generate_kicked_content(meta: MetaBundle):
+    generic_email_html_button = '<a href="mailto:PARTICIPANT_EMAIL?bcc=maximilian.schiedermeier@mcgill.ca&subject=RESTify Experiment Removal Notice&amp;body=Hello FIRST_NAME,%0D%0A%0D%0AThis is to notify you that you have been removed from participation in the RESTify study due to inactivity. You can no longer upload files or request compensation.%0D%0A%0D%0ABest,%0D%0AMaximilian Schiedermeier" style="text-decoration: none">📧</a>'
+    generic_email_html_button = generic_email_html_button.replace("PARTICIPANT_EMAIL", meta.get_email())
+    generic_email_html_button = generic_email_html_button.replace("FIRST_NAME", meta.get_first_name())
+    return generic_email_html_button
