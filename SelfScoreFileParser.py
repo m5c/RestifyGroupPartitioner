@@ -3,14 +3,16 @@ from pathlib import Path
 from Participant import Participant
 
 form_dir = "/Volumes/RestifyVolume/recruitment/"
+form_backup_dir = "/Volumes/RestifyVolume/fallback/"
+
 
 
 # Searches recursively for all self assessment submissions.
-def get_all_forms():
-    print("Scanning for forms in: " + form_dir)
+def get_all_forms(source):
+    print("Scanning for forms in: " + source)
     print("Found:")
     all_form_locations = []
-    for form in Path(form_dir).rglob('*.txt'):
+    for form in Path(source).rglob('*.txt'):
         print(form.absolute())
         all_form_locations.append(form.absolute())
     return all_form_locations
@@ -66,13 +68,27 @@ def extract_participants():
     participants = []
 
     ## Add an entry for every recruitment form detected
-    for form in get_all_forms():
+    for form in get_all_forms(form_dir):
         participants.append(extract_participant_line(form))
 
     # Before return, order the participants by their individual score sum
     participants.sort(reverse=True, key=participant_total_score)
 
     return participants
+
+## Build participant objects from parsed forms
+def extract_backup_participants():
+    backup_participants = []
+
+    ## Add an entry for every recruitment form detected
+    for form in get_all_forms(form_backup_dir):
+        backup_participants.append(extract_participant_line(form))
+
+    # Before return, order the participants by their individual score sum
+    backup_participants.sort(reverse=True, key=participant_total_score)
+
+    return backup_participants
+
 
 
 # Verifies if the input directory exists (is an ecrypted volume that may not be mounted)

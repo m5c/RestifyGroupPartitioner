@@ -8,7 +8,7 @@ from distributor.Partition import Partition
 
 # https://colorspectrum.design/generator.html
 from invitationgen.EmailGen import generate_email_content, generate_reminder_content, generate_extension_content, \
-    generate_kicked_content
+    generate_kicked_content, generate_sorry_content, generate_code_content
 
 palette = ["#8d8d8d", "#5ce7cb", "#5ca6e7", "#7a5ce7", "#d75ce7", "#e75c90", "#e7865c", "#747474"]
 coloured_skill_cells = "<span style=\"color:" + palette[0] + "\">Java</span> | <span style=\"color:" + palette[
@@ -41,6 +41,8 @@ def build_participant_scores_line(participant: Participant, meta_bundles: []):
         line = line + "   R:"+generate_reminder_content(meta_bundle)
         line = line + "   Extension:"+generate_extension_content(meta_bundle)
         line = line + "   K:"+generate_kicked_content(meta_bundle)
+        line = line + "   S:"+generate_sorry_content(meta_bundle)
+        line = line + "   Code:"+generate_code_content(meta_bundle)
 
     line = line + " |"
 

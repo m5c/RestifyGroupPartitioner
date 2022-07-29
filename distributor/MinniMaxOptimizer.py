@@ -2,9 +2,9 @@ from distributor.ControlGroup import ControlGroup
 from distributor.Partition import Partition
 
 
-# Optimizer that takes an input a given partition and searches for anternative with a lower MinniMax (worst average
+# Optimizer that takes an input a given partition and searches for alternative with a lower MinniMax (worst average
 # skill difference for any pair of groups on the same skill). Candidate set are all permutations where two
-# participants of the groups with currently highest Max are flipped.
+# participants of the groups with currently highest Max are flipped.c
 def optimize_once(partition: Partition):
     # extract indexes of target groups:
     target_group_a_index = partition.get_max_diff().get_min_index()

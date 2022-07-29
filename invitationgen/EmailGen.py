@@ -40,3 +40,16 @@ def generate_kicked_content(meta: MetaBundle):
     generic_email_html_button = generic_email_html_button.replace("PARTICIPANT_EMAIL", meta.get_email())
     generic_email_html_button = generic_email_html_button.replace("FIRST_NAME", meta.get_first_name())
     return generic_email_html_button
+
+
+def generate_sorry_content(meta: MetaBundle):
+    generic_email_html_button = '<a href="mailto:PARTICIPANT_EMAIL?bcc=maximilian.schiedermeier@mcgill.ca&subject=RESTify Experiment Compensation&amp;body=Hello FIRST_NAME,%0D%0A%0D%0AWe have received and evaluated your submission and it is complete.%0D%0AUnfortunately we currently experience severe issues with the distribution of Amazon vouchers. We have ordered all at once and Amazon considered it a fraud attempt. I am very sorry for the delay an inconvenience. We are working hard on fixing the situation on our side. I personally take care that you will receive the compensation as soon as possible. Thank you for your understanding, and again thank you very much for your participation.%0D%0A%0D%0ABest,%0D%0AMaximilian Schiedermeier" style="text-decoration: none">📧</a>'
+    generic_email_html_button = generic_email_html_button.replace("PARTICIPANT_EMAIL", meta.get_email())
+    generic_email_html_button = generic_email_html_button.replace("FIRST_NAME", meta.get_first_name())
+    return generic_email_html_button
+
+def generate_code_content(meta: MetaBundle):
+    generic_email_html_button = '<a href="mailto:PARTICIPANT_EMAIL?bcc=maximilian.schiedermeier@mcgill.ca&subject=RESTify Experiment Amazon Code&amp;body=Hello FIRST_NAME,%0D%0A%0D%0AHere is your amazon gift card code.%0D%0A%0D%0ACODEHERE%0D%0A%0D%0APlease immediately sign the attached form and send it back, so I can claim it back from the university.%0D%0A%0D%0ABest,%0D%0AMaximilian Schiedermeier" style="text-decoration: none">📧</a>'
+    generic_email_html_button = generic_email_html_button.replace("PARTICIPANT_EMAIL", meta.get_email())
+    generic_email_html_button = generic_email_html_button.replace("FIRST_NAME", meta.get_first_name())
+    return generic_email_html_button
