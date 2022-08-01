@@ -18,8 +18,9 @@ partition = optimize(partition)
 droppers = ["red-zebra", "green-raccoon", "blue-zebra", "yellow-squid", "blue-koala"]
 #, "yellow-koala", "green-koala", "blue-squid"]
 backup_participants = SelfScoreFileParser.extract_backup_participants()
-## todo create new set "ajusted participants", sorted by competence.
-PartitionAdjuster.mark_droppers(participants, partition, droppers)
+PartitionAdjuster.mark_droppers(partition, droppers)
+PartitionAdjuster.patch_participant_list(participants, backup_participants)
+
 
 ## Create all permutations of backup-participant orders, find the one with best minimax value.
 PartitionAdjuster.findBestBackupPermutation(partition, backup_participants)

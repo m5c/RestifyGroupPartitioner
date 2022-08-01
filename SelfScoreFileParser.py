@@ -6,7 +6,6 @@ form_dir = "/Volumes/RestifyVolume/recruitment/"
 form_backup_dir = "/Volumes/RestifyVolume/fallback/"
 
 
-
 # Searches recursively for all self assessment submissions.
 def get_all_forms(source):
     print("Scanning for forms in: " + source)
@@ -60,8 +59,14 @@ def extract_participant_line(form):
     return Participant(name, skills)
 
 
+def sortByTotalScore(participants: list[Participant]):
+    # Before return, order the participants by their individual score sum
+    participants.sort(reverse=True, key=participant_total_score)
+
+
 def participant_total_score(participant):
-    return(participant.compute_total_score())
+    return (participant.compute_total_score())
+
 
 ## Build participant objects from parsed forms
 def extract_participants():
@@ -71,10 +76,10 @@ def extract_participants():
     for form in get_all_forms(form_dir):
         participants.append(extract_participant_line(form))
 
-    # Before return, order the participants by their individual score sum
-    participants.sort(reverse=True, key=participant_total_score)
+    sortByTotalScore(participants)
 
     return participants
+
 
 ## Build participant objects from parsed forms
 def extract_backup_participants():
@@ -88,7 +93,6 @@ def extract_backup_participants():
     backup_participants.sort(reverse=True, key=participant_total_score)
 
     return backup_participants
-
 
 
 # Verifies if the input directory exists (is an ecrypted volume that may not be mounted)

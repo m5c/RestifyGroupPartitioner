@@ -1,4 +1,5 @@
 ## Helper class to substitute dropped out participants of an already optimized partition by backup personnel
+import SelfScoreFileParser
 from Participant import Participant
 from distributor import Partition, ControlGroup
 from invitationgen import MetaBundleFiller
@@ -16,12 +17,27 @@ def extract_dropper_colour(dropper: str):
     return dropper.split("-")[0]
 
 
-def mark_droppers(participants: List[Participant], partition: Partition, droppers: []):
+def mark_droppers(partition: Partition, droppers: []):
     for group in partition.get_groups():
         # iterate over droppers and remove all that match in colour
         for dropper in droppers:
             if extract_dropper_colour(dropper) == group.get_group_name().lower():
                 group.mark_dropper(extract_dropper_index(dropper))
+
+def patch_participant_list(participants: List[Participant], backup: List[Participant]):
+    # also replace droppers by backup personnel in original list
+    non_droppers = []
+    for participant in participants:
+        if not participant.is_dropper():
+            non_droppers.append(participant)
+    participants.clear()
+    participants.extend(non_droppers)
+
+    for participant in backup:
+        participants.append(participant)
+
+    # sort again, so participants are in order, descending total skill
+    SelfScoreFileParser.sortByTotalScore(participants)
 
 
 # Replaces all participants of  a partition that carry a dropper marker by a given tuple of backup participants. Keeps

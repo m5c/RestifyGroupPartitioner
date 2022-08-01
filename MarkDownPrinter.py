@@ -32,7 +32,7 @@ def build_participant_scores_line(participant: Participant, meta_bundles: []):
 
     # name
     if participant.is_dropper():
-        line = line + "*~~" + participant.name + "~~* "
+        line = line + "**" + participant.name + "** "
     else:
         line = line + "*" + participant.name + "* "
 
@@ -160,24 +160,21 @@ def print_distribution(text_file, partition : Partition, meta_bundles : []):
     # print AVG max
     text_file.write("| AVG max |")
     for skill_index in range(partition.get_skill_amount()):
-        text_file.write(str(round(partition.get_average_diffs()[skill_index].get_max(), 1)) + "|")
+        text_file.write(str(round(partition.get_average_diffs()[skill_index].get_max(), 2)) + "|")
     text_file.write("\n")
     # print AVG min
     text_file.write("| AVG min |")
     for skill_index in range(partition.get_skill_amount()):
-        text_file.write(str(round(partition.get_average_diffs()[skill_index].get_min(), 1)) + "|")
+        text_file.write(str(round(partition.get_average_diffs()[skill_index].get_min(), 2)) + "|")
     text_file.write("\n")
     # print AVG  diff
     text_file.write("| AVG diff |")
     for skill_index in range(partition.get_skill_amount()):
         if skill_index == partition.get_max_diff().get_skill_index():
-            text_file.write("**" + str(round(partition.get_average_diffs()[skill_index].get_diff(), 1)) + "** |")
+            text_file.write("**" + str(round(partition.get_average_diffs()[skill_index].get_diff(), 2)) + "** |")
         else:
-            text_file.write(str(round(partition.get_average_diffs()[skill_index].get_diff(), 1)) + "|")
+            text_file.write(str(round(partition.get_average_diffs()[skill_index].get_diff(), 2)) + "|")
     text_file.write("\n")
-
-    # TODO: highlight greatest diff.
-    # print max diff, textually.
 
     ## Next, for EVERY group in the provided partition, the participant list, codename, invitation link, stats, etc...
     for control_group in partition.groups:
