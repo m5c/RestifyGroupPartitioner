@@ -5,6 +5,13 @@ class Participant:
     def __init__(self, n, s):
         self.name = n
         self.skills = s
+        self.dropper = False
+
+    def set_dropper(self, status: bool):
+        self.dropper = status
+
+    def is_dropper(self):
+        return self.dropper
 
     def compute_total_score(self):
         return sum(self.skills)

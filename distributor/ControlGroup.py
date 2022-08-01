@@ -1,4 +1,5 @@
 import ParticipantStatTools
+from Participant import Participant
 
 
 class ControlGroup:
@@ -10,7 +11,7 @@ class ControlGroup:
     def add_participant(self, participant):
         self.participants.append(participant)
 
-    def get_participants(self):
+    def get_participants(self) -> list[Participant]:
         return self.participants
 
     def get_group_name(self):
@@ -30,3 +31,7 @@ class ControlGroup:
         for participant in self.participants:
             group_str += " * " + str(participant) + "\n"
         return group_str
+
+    def mark_dropper(self, dropper_index: int):
+        self.participants[dropper_index].set_dropper(True)
+        return self.participants[dropper_index].get_name()

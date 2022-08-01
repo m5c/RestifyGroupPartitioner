@@ -1,5 +1,6 @@
 import SelfScoreFileParser
 import MarkDownPrinter
+from distributor import PartitionAdjuster
 from distributor.ScoreBasedDistributor import ScoreBasedDistributor
 from distributor.MinniMaxOptimizer import optimize_once, optimize
 
@@ -14,9 +15,13 @@ partition = ScoreBasedDistributor(participants, ['Red', 'Green', 'Blue', 'Yellow
 partition = optimize(partition)
 
 ## Remove dropped out by code names and test all permutations with backup personnel
-droppers = ["red-zebra", "green-raccoon", "red-raccoon", "yellow-squid", "blue-koala"]
+droppers = ["red-zebra", "green-raccoon", "blue-zebra", "yellow-squid", "blue-koala"]
 backup_participants = SelfScoreFileParser.extract_backup_participants()
-reduced_partition = remove_droppers(partition, droppers)
+## todo create new set "ajusted participants", sorted by competence.
+PartitionAdjuster.mark_droppers(participants, partition, droppers)
+
+## Create all permutations of backup-participant orders, find the one with best minimax value.
+PartitionAdjuster.findBestBackupPermutation(partition, backup_participants)
 
 ## Generate spreadhsheet and links
 upload_locations = parse_all_upload_locations()

@@ -29,8 +29,12 @@ def print_preamble(text_file):
 # builds a markdown table line for a given participant
 def build_participant_scores_line(participant: Participant, meta_bundles: []):
     line = "|"
+
     # name
-    line = line + "*" + participant.name + "* "
+    if participant.is_dropper():
+        line = line + "*~~" + participant.name + "~~* "
+    else:
+        line = line + "*" + participant.name + "* "
 
 
     # if meta bundle info is provided, also print the email symbol

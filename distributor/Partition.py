@@ -1,4 +1,7 @@
+from typing import List
+
 from ParticipantStatTools import build_mean_skills
+from distributor.ControlGroup import ControlGroup
 from distributor.MaxAverageDiff import MaxAverageDiff
 
 
@@ -39,7 +42,12 @@ class Partition:
         self.average_diffs = self.compute_max_offset()
         self.max_average_diff = max(self.average_diffs, key=lambda m: m.diff)
 
-    def get_groups(self):
+    # Recomputes tha max average skill difference observed in this partition. Call this if you changes the partition composition.
+    def update_max_skill_diff(self):
+        self.average_diffs = self.compute_max_offset()
+        self.max_average_diff = max(self.average_diffs, key=lambda m: m.diff)
+
+    def get_groups(self) -> list[ControlGroup]:
         return self.groups
 
     def get_average_diffs(self):
