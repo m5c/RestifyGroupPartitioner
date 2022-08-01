@@ -16,6 +16,7 @@ partition = optimize(partition)
 
 ## Remove dropped out by code names and test all permutations with backup personnel
 droppers = ["red-zebra", "green-raccoon", "blue-zebra", "yellow-squid", "blue-koala"]
+#, "yellow-koala", "green-koala", "blue-squid"]
 backup_participants = SelfScoreFileParser.extract_backup_participants()
 ## todo create new set "ajusted participants", sorted by competence.
 PartitionAdjuster.mark_droppers(participants, partition, droppers)

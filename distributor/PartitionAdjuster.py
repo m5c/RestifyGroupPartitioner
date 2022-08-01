@@ -77,4 +77,7 @@ def findBestBackupPermutation(partition, backup_participants):
 
     # Third step, select the permutation with the best minimax value, replace marked participants for good, remove droppout markers.
     print("Done searching for MiniMax permutation. Best one is at index "+str(mini_max_permutation_index)+ " has MiniMax: "+str(mini_max_diff))
+    # revert to the optimum
+    substitute_marked_droppers(partition, all_backup_permutations[mini_max_permutation_index])
+
     return None
