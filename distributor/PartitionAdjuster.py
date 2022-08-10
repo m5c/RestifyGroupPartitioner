@@ -101,7 +101,7 @@ def findBestBackupPermutation(partition, backup_participants):
 ## Flips the partition associations and code names of a pair of participants
 def flip(flipper_name_1 : str, flipper_name_2 : str, partition: Partition):
 
-    # extract target croup and index for both flippers
+    # extract target group and index for both flippers
     colour_1 = extract_codename_colour(flipper_name_1)
     index_1 = extract_codename_index(flipper_name_1)
     colour_2 = extract_codename_colour(flipper_name_2)
@@ -112,7 +112,7 @@ def flip(flipper_name_1 : str, flipper_name_2 : str, partition: Partition):
     flipper_1 = control_group_1.get_participants()[index_1]
     flipper_2 = control_group_2.get_participants()[index_2]
 
-    ## Reassign group memebers, flipped
+    ## Reassign group members, flipped
     control_group_1.get_participants()[index_1] = flipper_2
     control_group_2.get_participants()[index_2] = flipper_1
 
@@ -122,4 +122,29 @@ def flip(flipper_name_1 : str, flipper_name_2 : str, partition: Partition):
     print("Flipped colourblind participants. New max-diff is: "+str(max_diff))
 
 
+# Replaces a targeted code name by a fallfallback replacer index
+def singelDropperReplacer(dropper_code_name: str, index: int, partition: Partition, participants: List[Participant]):
 
+    # extract target group and index for dropper
+    dropper_colour = extract_codename_colour(dropper_code_name)
+    dropper_index = extract_codename_index(dropper_code_name)
+
+    # Import data of replacement participant
+    replacement = SelfScoreFileParser.extract_participants("fallfallback")[index]
+    replacement.set_dropper(True)
+
+    # Partition and update stats:
+    dropper_control_group = partition.get_group_by_colour(dropper_colour)
+    real_dropper = dropper_control_group.get_participants()[dropper_index]
+    dropper_control_group.get_participants()[dropper_index] = replacement
+    partition.update_max_skill_diff()
+    max_diff = partition.get_max_diff().get_diff()
+    print("Updated partition participants after drop. New max-diff is: "+str(max_diff))
+
+
+
+    # Effectuate replacement in global list and in partition (the sort again)
+    # Global list
+    participants.remove(real_dropper)
+    participants.append(replacement)
+    SelfScoreFileParser.sortByTotalScore(participants)

@@ -4,6 +4,7 @@ from Participant import Participant
 
 form_dir = "/Volumes/RestifyVolume/recruitment/"
 form_backup_dir = "/Volumes/RestifyVolume/fallback/"
+form_backup_backup_dir = "/Volumes/RestifyVolume/fallfallback/"
 
 
 # Searches recursively for all self assessment submissions.
@@ -48,7 +49,7 @@ def extract_scores(form):
 
 
 ## argument is the form location, not the form content
-def extract_participant_line(form):
+def __extract_participant_line(form):
     ## extract participant name from form file location
     name = str(form).split("/")[4]
 
@@ -69,30 +70,27 @@ def participant_total_score(participant):
 
 
 ## Build participant objects from parsed forms
-def extract_participants():
+## Source string must be either of "original", "fallback", "fallfallback"
+def extract_participants(source: str):
+
+    if(source == "original"):
+        form_dir_string = form_dir
+    elif(source == "fallback"):
+        form_dir_string = form_backup_dir
+    elif(source == "fallfallback"):
+        form_dir_string = form_backup_backup_dir
+    else:
+        raise("Unknown input option: " + source)
+
     participants = []
 
     ## Add an entry for every recruitment form detected
-    for form in get_all_forms(form_dir):
-        participants.append(extract_participant_line(form))
+    for form in get_all_forms(form_dir_string):
+        participants.append(__extract_participant_line(form))
 
     sortByTotalScore(participants)
 
     return participants
-
-
-## Build participant objects from parsed forms
-def extract_backup_participants():
-    backup_participants = []
-
-    ## Add an entry for every recruitment form detected
-    for form in get_all_forms(form_backup_dir):
-        backup_participants.append(extract_participant_line(form))
-
-    # Before return, order the participants by their individual score sum
-    backup_participants.sort(reverse=True, key=participant_total_score)
-
-    return backup_participants
 
 
 # Verifies if the input directory exists (is an ecrypted volume that may not be mounted)
