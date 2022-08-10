@@ -50,6 +50,14 @@ class Partition:
     def get_groups(self) -> list[ControlGroup]:
         return self.groups
 
+    def get_group_by_colour(self, colour: str) -> ControlGroup:
+        control_groups = self.get_groups()
+        for control_group in control_groups:
+            if control_group.get_group_name().lower() == colour.lower():
+                return control_group
+        raise NameError("No such group "+colour)
+
+
     def get_average_diffs(self):
         return self.average_diffs
 

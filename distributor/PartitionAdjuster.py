@@ -7,13 +7,13 @@ from typing import List
 import itertools
 
 
-def extract_dropper_index(dropper: str):
+def extract_codename_index(dropper: str):
     animal_name = dropper.split("-")[1]
     index = MetaBundleFiller.pseudonym_animal_list.index(animal_name.capitalize())
     return index
 
 
-def extract_dropper_colour(dropper: str):
+def extract_codename_colour(dropper: str):
     return dropper.split("-")[0]
 
 
@@ -21,8 +21,8 @@ def mark_droppers(partition: Partition, droppers: []):
     for group in partition.get_groups():
         # iterate over droppers and remove all that match in colour
         for dropper in droppers:
-            if extract_dropper_colour(dropper) == group.get_group_name().lower():
-                group.mark_dropper(extract_dropper_index(dropper))
+            if extract_codename_colour(dropper) == group.get_group_name().lower():
+                group.mark_dropper(extract_codename_index(dropper))
 
 def patch_participant_list(participants: List[Participant], backup: List[Participant]):
     # also replace droppers by backup personnel in original list
@@ -97,3 +97,29 @@ def findBestBackupPermutation(partition, backup_participants):
     substitute_marked_droppers(partition, all_backup_permutations[mini_max_permutation_index])
 
     return None
+
+## Flips the partition associations and code names of a pair of participants
+def flip(flipper_name_1 : str, flipper_name_2 : str, partition: Partition):
+
+    # extract target croup and index for both flippers
+    colour_1 = extract_codename_colour(flipper_name_1)
+    index_1 = extract_codename_index(flipper_name_1)
+    colour_2 = extract_codename_colour(flipper_name_2)
+    index_2 = extract_codename_index(flipper_name_2)
+
+    control_group_1 = partition.get_group_by_colour(colour_1)
+    control_group_2 = partition.get_group_by_colour(colour_2)
+    flipper_1 = control_group_1.get_participants()[index_1]
+    flipper_2 = control_group_2.get_participants()[index_2]
+
+    ## Reassign group memebers, flipped
+    control_group_1.get_participants()[index_1] = flipper_2
+    control_group_2.get_participants()[index_2] = flipper_1
+
+    ## print stats of changed max_diff
+    partition.update_max_skill_diff()
+    max_diff = partition.get_max_diff().get_diff()
+    print("Flipped colourblind participants. New max-diff is: "+str(max_diff))
+
+
+

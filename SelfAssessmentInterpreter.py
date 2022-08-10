@@ -21,9 +21,14 @@ backup_participants = SelfScoreFileParser.extract_backup_participants()
 PartitionAdjuster.mark_droppers(partition, droppers)
 PartitionAdjuster.patch_participant_list(participants, backup_participants)
 
-
 ## Create all permutations of backup-participant orders, find the one with best minimax value.
 PartitionAdjuster.findBestBackupPermutation(partition, backup_participants)
+
+## Replace the fallback optimized partition (targeted second generation droppers) and flip the colour blind
+## Flipping means swaping the affiliated team members, updating the partition stats
+PartitionAdjuster.flip("blue-zebra", "green-raccoon", partition)
+## Replacing means removing a participant for good and inserting another now one from the replacers folder for good
+# PartitionAdjuster.replace("blue-squid", 1)
 
 ## Generate spreadhsheet and links
 upload_locations = parse_all_upload_locations()
