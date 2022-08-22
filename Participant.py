@@ -10,6 +10,9 @@ class Participant:
     def set_dropper(self, status: bool):
         self.dropper = status
 
+    def get_skills(self) -> list[int]:
+        return self.skills
+
     def is_dropper(self):
         return self.dropper
 
