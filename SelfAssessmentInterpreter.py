@@ -1,3 +1,4 @@
+import CsvExporter
 import SelfScoreFileParser
 import MarkDownPrinter
 from distributor import PartitionAdjuster
@@ -28,7 +29,7 @@ PartitionAdjuster.findBestBackupPermutation(partition, backup_participants)
 ## Flipping means swaping the affiliated team members, updating the partition stats
 PartitionAdjuster.flip("blue-zebra", "green-raccoon", partition)
 ## Replacing means removing a participant for good and inserting another now one from the replacers folder for good
-PartitionAdjuster.singelDropperReplacer("blue-squid", 0, partition, participants)
+PartitionAdjuster.singleDropperReplacer("blue-squid", 0, partition, participants)
 
 ## Generate spreadhsheet and links
 upload_locations = parse_all_upload_locations()
@@ -36,3 +37,6 @@ meta_bundles = parse_all_emails()
 meta_bundles = complete_with_partition_info(meta_bundles, partition, upload_locations)
 MarkDownPrinter.build_markdown_with_partition(participants, partition, meta_bundles)
 print("Open this file in your browser: ///tmp/recruitment.md")
+
+## Export final partition skill data to CSV file
+CsvExporter.export_partition_csv(partition, "/tmp/partitionskills.csv")

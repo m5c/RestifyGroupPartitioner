@@ -123,7 +123,7 @@ def flip(flipper_name_1 : str, flipper_name_2 : str, partition: Partition):
 
 
 # Replaces a targeted code name by a fallfallback replacer index
-def singelDropperReplacer(dropper_code_name: str, index: int, partition: Partition, participants: List[Participant]):
+def singleDropperReplacer(dropper_code_name: str, index: int, partition: Partition, participants: List[Participant]):
 
     # extract target group and index for dropper
     dropper_colour = extract_codename_colour(dropper_code_name)
