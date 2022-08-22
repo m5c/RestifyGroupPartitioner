@@ -24,7 +24,8 @@ def export_partition_csv(partition: Partition, participants: list[Participant], 
 
         for index in range(len(group.get_participants())):
             pseudonym = MetaBundleFiller.build_pseudonym(group, index)
-            ## replace space by dash so it matches codename in other CSV files.
+
+            # replace space by dash so it matches codename in other CSV files.
             pseudonym = pseudonym.replace(' ', '-')
             csvfile.write("\n")
             csvfile.write(create_participant_entry(pseudonym, group.get_participants()[index]))
