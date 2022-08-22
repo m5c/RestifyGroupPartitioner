@@ -39,4 +39,4 @@ MarkDownPrinter.build_markdown_with_partition(participants, partition, meta_bund
 print("Open this file in your browser: ///tmp/recruitment.md")
 
 ## Export final partition skill data to CSV file
-CsvExporter.export_partition_csv(partition, "/tmp/partitionskills.csv")
+CsvExporter.export_partition_csv(partition, participants, "/tmp/partitionskills.csv")
