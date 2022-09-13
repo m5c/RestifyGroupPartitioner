@@ -135,7 +135,7 @@ def print_participant_details(preamble, text_file, participants, meta_bundles: [
 # Similar to call to box plotter in print_global_stats, but creates 4 boxplots next to another, representing the individual groups.
 def build_fused_stats(partition: Partition):
     # lists all individual skills, but with interleaving groups
-    interleaved_skills = []
+    interleaved_skills = [ ]
     for skill_index in range(partition.get_skill_amount()):
         groups = partition.groups
         for group_index in range(len(groups)):

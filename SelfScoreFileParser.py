@@ -50,13 +50,13 @@ def extract_scores(form):
 
 ## argument is the form location, not the form content
 def __extract_participant_line(form):
-    ## extract participant name from form file location
+    # extract participant name from form file location
     name = str(form).split("/")[4]
 
-    ## extract participant skills from form file
+    # extract participant skills from form file
     skills = extract_scores(form)
 
-    ## add total score
+    # add total score
     return Participant(name, skills)
 
 

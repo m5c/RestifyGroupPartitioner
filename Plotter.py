@@ -4,10 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as stats
 import math
-from matplotlib.pyplot import figure
 
 
-def plot_gaussian(mean, stddev, colour):
+def plot_gaussian(mean: float, stddev: float, colour: str):
     # reset figure, to have separate drawings
     # plt.clf()
 
@@ -22,7 +21,7 @@ def plot_gaussian(mean, stddev, colour):
     plt.savefig("/tmp/gaussians.png")
 
 
-def plot_box(values, palette, partitions, filename):
+def plot_box(all_skill_values_by_skill_by_group: list[int], palette: list[str], partitions, filename: str):
     # reset figure, to have separate drawings
     plt.clf()
 
@@ -31,9 +30,9 @@ def plot_box(values, palette, partitions, filename):
     plt.rcParams["figure.figsize"] = (14, 4)
 
     # plot the boxes
-    for index in range(len(values)):
+    for index in range(len(all_skill_values_by_skill_by_group)):
         plotter_colour = palette[int(index/partitions)]
-        plt.boxplot(values[index], positions=[index + 1], notch=False, patch_artist=True, showfliers=True,
+        plt.boxplot(all_skill_values_by_skill_by_group[index], positions=[index + 1], notch=False, patch_artist=True, showfliers=True,
                     boxprops=dict(facecolor=plotter_colour, color="#FFFFFF"),
                     capprops=dict(color=plotter_colour),
                     whiskerprops=dict(color=plotter_colour),

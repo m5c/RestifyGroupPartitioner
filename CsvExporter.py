@@ -35,14 +35,13 @@ def export_partition_csv(partition: Partition, participants: list[Participant], 
 
 
 def create_header() -> str:
-    return "codename, java, spring, maven, touchcore, unix, rest, singleton, reflection"
+    return "codename,javaskill,springskill,mavenskill,touchcoreskill,unixskill,restskill,singletonskill,reflectionskill"
 
 
 def create_participant_entry(codename: str, participant: Participant) -> str:
     csvline = codename + ", "
     for skill in participant.get_skills():
-        csvline += str(skill) + ", "
+        csvline += str(skill) + ","
     # remove last trailing character
-    csvline = csvline.strip(csvline[-1])
     csvline = csvline.strip(csvline[-1])
     return csvline
