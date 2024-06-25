@@ -2,6 +2,8 @@
 
 Fast and automatic group repartition with comparable skillsets.
 
+ > **THIS VERSION IS A STATIC SNAPSHOT, CREATED FOR THE MODELS ARTIFACT EVALUATION. UNLESS YOU ARE A REVIEWER, PLEASE [ACCESS THE ORIGINAL ARTIFACT](https://github.com/m5c/RestifyGroupPartitioner)**
+
 ## About
 
 For the purpose of our RESTify controlled experiment we strive for control groups with comparable skill sets. We want to
@@ -9,6 +11,8 @@ ensure that the insight compared for a given group is as comparable as possible 
 group. This means we must ensure the group participants showcase comparable skills for the technologies involved.  
 This repository contains a simple python program to automatize the group partition task, based on the recruits
 self-declared skill sets.
+
+ > Note: This software cannot be run without personal participant information (actual name linked to self-reported skills). The code cannot be executed without that undisclosed data. Nonetheless the algorothm code can be reviewed and reused for future projects.
 
 ## Functionality
 
