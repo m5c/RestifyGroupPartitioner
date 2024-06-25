@@ -49,7 +49,7 @@ place into groups ABCD. On next iteration place into groups DCBA and so on.
 This algorithm was first proposed by [Dr. Timo Lang](https://interfacereasoning.com/people/):  
 A brute force testing of all possible group partitions is not technically feasible (```1.1E10``` combinations).  
 Timo's algorithm attempts to search for the fairest possible partition where the first group created is as close as
-possible to the normalized average skill vector. This reduces the combinatoric charge for brute force testing of the
+possible to the normalized average skill vector. This reduces the combinatorics charge for brute force testing of the
 remaining groups to ```7.6E5``` possible partitions, which is still considerable.
 
 ## Usage
@@ -65,8 +65,8 @@ Run instructions:
 
 ## Contact / Pull Requests
 
-* Author: Maximilian Schiedermeier ![email](email.png)
+* Author: [Maximilian Schiedermeier](mailto:schiedermeier.maximilian@uqam.ca)
 * Github: [m5c](https://github.com/m5c)
-* Webpage: https://www.cs.mcgill.ca/~mschie3
+* Webpage: [https://m5c.github.io/](https://m5c.github.io/)
 * License: [MIT](https://opensource.org/licenses/MIT)
 
