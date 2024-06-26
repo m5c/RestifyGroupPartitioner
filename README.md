@@ -63,6 +63,10 @@ Run instructions:
 (Not published to protect participant anonymity)
 * Start the partitioner: ```python SelfAssessmentInterpreter.py```.
 
+## License
+
+This software is under open source [MIT License](LICENSE.txt).
+
 ## Contact / Pull Requests
 
 * Author: [Maximilian Schiedermeier](mailto:schiedermeier.maximilian@uqam.ca)
